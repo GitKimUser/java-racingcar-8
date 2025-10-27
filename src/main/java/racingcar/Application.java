@@ -42,8 +42,7 @@ class RacingGame {
 
         List<Car> cars = createCarsFromInput(carName);
 
-        System.out.println("시도할 횟수는 몇 회인가요?");
-        int attempt = Integer.parseInt(Console.readLine());
+        int attempt = getValidAttemptCount();
 
         System.out.println("\n실행 결과");
         for (int i = 0; i < attempt; i++) {
@@ -59,8 +58,26 @@ class RacingGame {
         System.out.println("최종 우승자 : " + String.join(", ", winners));
     }
 
+    private int getValidAttemptCount() {
+        System.out.println("시도할 횟수는 몇 회인가요?");
+        String input = Console.readLine();
+        try {
+            int count = Integer.parseInt(input);
+            if (count < 1) {
+                throw new IllegalArgumentException("시도 횟수는 1 이상이어야 합니다.");
+            }
+            return count;
+        } catch (NumberFormatException e) { // 숫자 변환 실패 시
+            throw new IllegalArgumentException("시도 횟수는 숫자여야 합니다.");
+        }
+    }
+
     private List<Car> createCarsFromInput(String carNameInput) {
         String[] names = carNameInput.split(",");
+        Set<String> nameSet = new HashSet<>(Arrays.asList(names));
+        if (nameSet.size() != names.length) {
+            throw new IllegalArgumentException("중복된 자동차 이름이 있습니다.");
+        }
         List<Car> cars = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             if (names[i].length() > 5) {
