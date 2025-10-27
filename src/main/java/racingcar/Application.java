@@ -45,6 +45,7 @@ class RacingGame {
         System.out.println("시도할 횟수는 몇 회인가요?");
         int attempt = Integer.parseInt(Console.readLine());
 
+        System.out.println("\n실행 결과");
         for (int i = 0; i < attempt; i++) {
             for (int j = 0; j < cars.size(); j++) {
                 Car car = cars.get(j);
@@ -54,6 +55,8 @@ class RacingGame {
             System.out.println();
         }
 
+        List<String> winners = findWinners(cars);
+        System.out.println("최종 우승자 : " + String.join(", ", winners));
     }
 
     private List<Car> createCarsFromInput(String carNameInput) {
@@ -82,5 +85,26 @@ class RacingGame {
 
             System.out.println();
         }
+    }
+
+    private List<String> findWinners(List<Car> cars) {
+
+        int maxPosition = 0;
+
+        for (Car car : cars) {
+            if (car.getPosition() > maxPosition) {
+                maxPosition = car.getPosition();
+            }
+        }
+
+        List<String> winners = new ArrayList<>();
+
+        for (Car car : cars) {
+            if (car.getPosition() == maxPosition) {
+                winners.add(car.getName());
+            }
+        }
+
+        return winners;
     }
 }
