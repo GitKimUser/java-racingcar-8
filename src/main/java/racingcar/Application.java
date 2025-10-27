@@ -50,9 +50,10 @@ class RacingGame {
                 Car car = cars.get(j);
                 car.move();
             }
+            printCurrentStatus(cars);
+            System.out.println();
         }
-        printCurrentStatus(cars);
-        System.out.println();
+
     }
 
     private List<Car> createCarsFromInput(String carNameInput) {
@@ -71,7 +72,15 @@ class RacingGame {
         return cars;
     }
 
-    private void printCurrentStatus(List<Car> car) {
+    private void printCurrentStatus(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.print(car.getName() + " : ");
 
+            for (int i = 0; i < car.getPosition(); i++) {
+                System.out.print("-");
+            }
+
+            System.out.println();
+        }
     }
 }
